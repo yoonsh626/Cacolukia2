@@ -10,4 +10,11 @@ MongoClient.connect(url, (err, database) => {
 
    // 연결 종료하기
    database.close();
+   
+   //현재 테스트 파일을 편집중입니다.
+   //20180611 YSH
+   
+   
+   
+   
 });
