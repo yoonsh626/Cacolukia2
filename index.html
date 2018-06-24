@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta chatset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Card data Exchange</title>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+        body {
+            margin-left: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+<h3>카드정보 암호화</h3>
+<div>
+    <table width="800" border="1" cellpadding="2" style="border-collapse:collapse">
+        <tr bgcolor="#CCCCCC" height="23"> 
+            <td width="80" align="center">일자</td>
+            <td width="120" align="center">카드사</td>
+            <td width="130" align="center">카드번호</td>
+            <td width="65" align="center">금액</td>
+        </tr>
+            <tr bgcolor="#F2F2F2" height="23">	
+                <td width="80" align="center">20180601</td>
+                <td width="120" align="center">신한</td>
+                <td width="130" align="center">452*-****-****-*123</td>
+                <td width="65" align="center">50000</td>
+            </tr>
+    </table>
+</div>
+<br><br>
+
+<div>
+		<table width="600" border="1" cellpadding="2" bgcolor="lightyellow" style="border-collapse:collapse">
+		  <tr>
+			<td width="100" align="center" bgcolor="lightblue">회식일자</td>
+			<td width="400" align="left">
+			  <input type="text" id="year" size="4" maxlength="4" value=""> -
+			  <input type="text" id="month" size="2" maxlength="2" value=""> -
+			  <input type="text" id="day" size="2" maxlength="2" value="">
+			</td>
+		  </tr>
+		  <tr>
+			<td width="100" align="center" bgcolor="lightblue">카드사</td>
+			<td width="400" align="left">
+				&nbsp;
+			  <input type="radio" id="gubun" value="0" checked> 신한 &nbsp;&nbsp;
+              <input type="radio" id="gubun" value="1"> 국민 &nbsp;&nbsp;
+              <input type="radio" id="gubun" value="2"> 기업 &nbsp;&nbsp;
+              <input type="radio" id="gubun" value="3"> 기타 &nbsp;&nbsp;
+			</td>
+		  </tr>
+		  <tr>
+			<td width="100" align="center" bgcolor="lightblue">카드번호</td>
+			<td width="400" align="left">
+			  <input id="cardnum" size="40">
+			</td>
+		  </tr>
+		  <tr>
+			<td width="100" align="center" bgcolor="lightblue">금액</td>
+			<td width="400" align="left">
+			  <input id="amt" size="20">
+			</td>
+		  </tr>
+		</table>
+		<br>
+		<table width="500" border="0">
+		  <tr>
+			<td align="center"> 
+			  <input type="submit" value="등록">
+			</td>
+		  </tr>
+		</table>
+    </div>
+    <br>
+<div>
+    <table width="500" border="1" bgcolor="lightyellow">
+    <tr> 
+        <td width="200" align="left" bgcolor="#CCCCCC" >
+            <span> 암호화 된 카드 데이터(전문) : </span>
+        </td>
+        <td width="300" align="left">
+            <input readonly id="recode">
+        </td>   
+    </tr>
+    </table>
+</div>
+
+<script>
+    // 전체 전문을 통합하는 부분
+    /*const temp = $("#year").val() + $("#month").val() + $("#day").val() 
+            + $("#gubun").val() + $("#cardnum").val() + $("#amt").val();
+    */
+
+    var socket = io.connect();
+    
+
+
+    socket.on('connect', () => {
+        console.log('connect');
+    });
+
+    socket.on('recode changed', data => {
+        $("#recode").val(data);
+    });
+
+    $('#cardnum').on('input propertychange', () => {
+        const cardnum = $('#cardnum').val();
+        console.log('cardnum changed : ', cardnum);
+        socket.emit('cardnum changed', cardnum);        
+    });
+
+</script>
+</body>
+</html>
