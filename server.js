@@ -18,7 +18,7 @@ const io = require('socket.io')(server);
 io.on('connection', socket => {
     console.log('Client connected');
 
-    socket.on('cardnum changed', data => {
+    socket.on('cardnum', data => {
 
 
         /*
@@ -35,7 +35,7 @@ io.on('connection', socket => {
 
         const recode = i;
 
-        console.log('recode changed : ', recode);
-        io.emit('recode changed', recode)
+        console.log('recode : ', recode);
+        io.emit('recode', recode)
      });
 });

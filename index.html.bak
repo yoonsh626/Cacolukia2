@@ -65,14 +65,14 @@
         console.log('connect');
     });
 
-    socket.on('recode', data => {
+    socket.on('recode changed', data => {
         $("#recode").val(data);
     });
 
     $('#cardnum').on('input propertychange', () => {
         const cardnum = $('#cardnum').val();
-        console.log('cardnum : ', cardnum);
-        socket.emit('cardnum', cardnum);        
+        console.log('cardnum changed : ', cardnum);
+        socket.emit('cardnum changed', cardnum);        
     });
 
 </script>
